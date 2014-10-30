@@ -160,7 +160,49 @@ define([
     });
 
   });
+    describe('performance', function() {
+    console.profile('Performance Test : ' + variant);
+    var loops = 50000;
+    for (var i = 0; i < loops; i++) {
+      var stack;
+      var instantiator = variant === 'pseudoclassical' ? Stack : makeStack;
+      var prototypeOfInstances = variant === 'prototypal' && stackMethods;
 
+      if(variant === 'pseudoclassical'){
+        stack = new instantiator();
+      } else {
+        stack = instantiator();
+      }
+      stack.push('a');
+      stack.push('b');
+      stack.push('c');
+      stack.pop();
+      stack.push('a');
+      stack.push('b');
+      stack.push('c');
+      stack.pop();
+
+      var queue;
+      var instantiator = variant === 'pseudoclassical' ? Queue : makeQueue;
+      var prototypeOfInstances = variant === 'prototypal' && queueMethods;
+
+      if(variant === 'pseudoclassical'){
+        queue = new instantiator();
+      } else {
+        queue = instantiator();
+      }
+      queue.enqueue('a');
+      queue.enqueue('b');
+      queue.dequeue();
+      queue.enqueue('c');
+      queue.enqueue('a');
+      queue.enqueue('b');
+      queue.dequeue();
+      queue.enqueue('c');
+    }
+    console.profileEnd();
+    expect(true).to.equal(true);
+  });
 
   window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run();
 });
