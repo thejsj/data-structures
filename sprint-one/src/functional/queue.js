@@ -17,10 +17,10 @@ var makeQueue = function(){
       count -= 1;
     }
     var result = storage[0];
+    delete storage[0];
     for (var prop in storage) {
       storage[prop - 1] = storage[prop];
     }
-    delete storage[count];
     return result;
   };
 

@@ -13,10 +13,10 @@ Queue.prototype.dequeue = function(){
     this.count -= 1;
   }
   var result = this.storage[0];
+  delete this.storage[0];
   for (var prop in this.storage) {
     this.storage[prop - 1] = this.storage[prop];
   }
-  delete this.storage[this.count];
   return result;
 };
 

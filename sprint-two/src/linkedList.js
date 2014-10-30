@@ -16,8 +16,6 @@ var makeLinkedList = function(){
     if (list.head === null) {
       list.head = list.values[value];
     }
-    console.log('addToTail: ' + value);
-    console.log(list.values);
   };
 
   list.removeHead = function(){
@@ -28,16 +26,9 @@ var makeLinkedList = function(){
   };
 
   list.contains = function(target){
-    console.log('contains');
-    console.log(target);
-    console.log(list);
     if (target in list.values) {
-   //   debugger;
-      console.log(list.indexOf(target));
-      return list[target];
+      return true;
     }
-    //debugger;
-    console.log('false');
     return false;
   };
 
