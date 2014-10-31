@@ -45,7 +45,10 @@ describe('graph', function() {
     graph.addNode('bananas');
     graph.addNode('satsumas', 'bananas');
     graph.addEdge('satsumas', 'apples');
+    console.clear();
     graph.removeEdge('apples', 'bananas');
+    console.log('TEST');
+    console.log(graph.getEdge('apples', 'bananas'));
     expect(graph.getEdge('apples', 'bananas')).to.equal(false);
   });
 

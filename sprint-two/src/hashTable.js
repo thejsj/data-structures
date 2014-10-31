@@ -21,9 +21,9 @@ HashTable.prototype.retrieve = function (k) {
     // get the value in the array
     var val_array = this._storage.get(i);
     //loop through that array
-    for (var ii = 0; i < val_array.length; ii++) {
-        if (val_array[ii].k === k) {
-            return val_array[ii].v;
+    for (var i = 0; i < val_array.length; i++) {
+        if (val_array[i].k === k) {
+            return val_array[i].v;
         }
     }
     return null;
@@ -34,9 +34,9 @@ HashTable.prototype.remove = function (k) {
     // get the array at the i position
     var val_array = this._storage.get(i);
     // loop through the array
-    for (var ii = 0; ii < val_array.length; ii++) {
-        if (val_array[ii].k === k) {
-            val_array.splice(ii, 1);
+    for (var i = 0; i < val_array.length; i++) {
+        if (val_array[i].k === k) {
+            val_array.splice(i, 1);
         }
     }
     // re-set the array
