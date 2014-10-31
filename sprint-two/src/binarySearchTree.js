@@ -1,9 +1,9 @@
-var makeBinarySearchTree = function(value){
+var makeBinarySearchTree = function (value) {
   var tree = {};
   tree.value = value;
   tree.left = null;
   tree.right = null;
-  tree.insert = function(value) {
+  tree.insert = function (value) {
     if (value === tree.value) {
       return false;
     }
@@ -22,7 +22,7 @@ var makeBinarySearchTree = function(value){
         return tree.right.insert(value);
       }
     }
-  }
+  };
   tree.contains = function (value) {
     if (value === tree.value) {
       return true;
@@ -40,8 +40,8 @@ var makeBinarySearchTree = function(value){
         return tree.right.contains(value);
       }
     }
-  }
-  tree.depthFirstLog = function(func) {
+  };
+  tree.depthFirstLog = function (func) {
     func(tree.value);
     if (tree.left !== null) {
       tree.left.depthFirstLog(func);
@@ -49,7 +49,7 @@ var makeBinarySearchTree = function(value){
     if (tree.right !== null) {
       tree.right.depthFirstLog(func);
     }
-  }
+  };
   return tree;
 };
 

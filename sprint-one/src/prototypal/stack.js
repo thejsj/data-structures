@@ -1,20 +1,18 @@
-var makeStack = function() {
+var makeStack = function () {
   var someInstance = Object.create(stackMethods);
   someInstance.storage = {};
   someInstance.count = 0;
-
   return someInstance;
-
 };
 
 var stackMethods = {};
 
-stackMethods.push = function(value){
+stackMethods.push = function (value) {
   this.storage[this.count] = value;
   this.count += 1;
 };
 
-stackMethods.pop = function(){
+stackMethods.pop = function () {
   if (this.count) {
     this.count -= 1;
   }
@@ -23,7 +21,6 @@ stackMethods.pop = function(){
   return result;
 };
 
-stackMethods.size = function(){
+stackMethods.size = function () {
   return this.count;
 };
-

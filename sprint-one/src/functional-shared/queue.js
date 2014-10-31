@@ -1,22 +1,20 @@
-var makeQueue = function(){
+var makeQueue = function () {
   var someInstance = {
     storage: {},
     count: 0
   };
   extend(someInstance, queueMethods);
-
   return someInstance;
-
 };
 
 var queueMethods = {};
 
-queueMethods.enqueue = function(value){
+queueMethods.enqueue = function (value) {
   this.storage[this.count] = value;
   this.count += 1;
 };
 
-queueMethods.dequeue = function(){
+queueMethods.dequeue = function () {
   if (this.count) {
     this.count -= 1;
   }
@@ -28,11 +26,11 @@ queueMethods.dequeue = function(){
   return result;
 };
 
-queueMethods.size = function(){
+queueMethods.size = function () {
   return this.count;
 };
 
-var extend = function(to, from) {
+var extend = function (to, from) {
   for (var key in from) {
     to[key] = from[key];
   }

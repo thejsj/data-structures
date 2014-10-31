@@ -1,14 +1,14 @@
-var Queue = function(){
+var Queue = function () {
   this.storage = {};
   this.count = 0;
 };
 
-Queue.prototype.enqueue = function(value){
+Queue.prototype.enqueue = function (value) {
   this.storage[this.count] = value;
   this.count += 1;
 };
 
-Queue.prototype.dequeue = function(){
+Queue.prototype.dequeue = function () {
   if (this.count) {
     this.count -= 1;
   }
@@ -20,6 +20,6 @@ Queue.prototype.dequeue = function(){
   return result;
 };
 
-Queue.prototype.size = function(){
+Queue.prototype.size = function () {
   return this.count;
 };

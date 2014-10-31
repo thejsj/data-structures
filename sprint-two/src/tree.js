@@ -1,4 +1,4 @@
-var makeTree = function(value){
+var makeTree = function (value) {
   var newTree = {};
   newTree.value = value;
   newTree.children = [];
@@ -8,11 +8,11 @@ var makeTree = function(value){
 
 var treeMethods = {};
 
-treeMethods.addChild = function(value){
+treeMethods.addChild = function (value) {
   this.children.push(makeTree(value));
 };
 
-treeMethods.contains = function(target){ // string
+treeMethods.contains = function (target) { // string
   if (this.value === target) return true;
   // Go through all values in the array and check wether they're present
   for (var i = 0; i < this.children.length; i++) {
@@ -23,12 +23,11 @@ treeMethods.contains = function(target){ // string
   return false;
 };
 
-var extend = function(to, from) {
+var extend = function (to, from) {
   for (var key in from) {
     to[key] = from[key];
   }
 };
-
 
 /*
  * Complexity: What is the time complexity of the above functions?
