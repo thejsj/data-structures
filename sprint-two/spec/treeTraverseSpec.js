@@ -1,8 +1,8 @@
-describe('treeWithParent', function() {
+describe('treeTraverse', function() {
   var tree;
 
   beforeEach(function() {
-    tree = makeTreeWithParent(1);
+    tree = makeTree();
   });
 
   it('should have methods named "addChild" and "contains", and a property named "value"', function() {
@@ -37,33 +37,21 @@ describe('treeWithParent', function() {
     tree.addChild(6);
     tree.children[0].addChild(7);
     tree.children[1].addChild(8);
-    tree.children[1].addChild(9);
     expect(tree.contains(7)).to.equal(true);
     expect(tree.contains(8)).to.equal(true);
   });
 
-  it('should have a parent attribute', function(){
-    tree.addChild(5);
-    expect(tree.children[0].parent.value).to.equal(tree.value);
-  });
-
-  it('should handle nested parent-child relationships', function(){
+  it('should correctly implement traverse function', function(){
     tree.addChild(5);
     tree.children[0].addChild(7);
-    expect(tree.children[0].children[0].parent.parent.value).to.equal(tree.value);
+    tree.children[0].children[0].addChild(2);
+    tree.traverse(function(value) {
+      value *= 2;
+      return value;
+    })
+    expect(tree.children[0].value).to.equal(10);
+    expect(tree.children[0].children[0].value).to.equal(14);
+    expect(tree.children[0].children[0].children[0].value).to.equal(4);
   });
 
-  it('should handle remove from parent function', function () {
-    tree.addChild(5);
-    tree.addChild(6);
-    tree.children[0].addChild(7);
-    tree.children[0].addChild(8);
-    tree.children[1].addChild(1);
-    tree.children[1].addChild(797);
-    var tree2 = tree.children[1].removeFromParent();
-    expect(tree2.parent).to.equal(null);
-    expect(tree.children.length).to.equal(1);
-    expect(tree.contains(797)).to.equal(false);
-    expect(tree2.contains(797)).to.equal(true);
-  });
 });
