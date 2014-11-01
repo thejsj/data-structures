@@ -3,17 +3,17 @@ var makeTreeWithParent = function (value, parent) {
   newTree.value = value;
   newTree.children = [];
   newTree.parent = parent || null;
-  extend(newTree, treeMethods);
+  extend(newTree, treeWithParentMethods);
   return newTree;
 };
 
-var treeMethods = {};
+var treeWithParentMethods = {};
 
-treeMethods.addChild = function (value) {
+treeWithParentMethods.addChild = function (value) {
   this.children.push(makeTreeWithParent(value, this));
 };
 
-treeMethods.contains = function (target) { // string
+treeWithParentMethods.contains = function (target) { // string
   if (this.value === target) return true;
   // Go through all values in the array and check wether they're present
   for (var i = 0; i < this.children.length; i++) {
@@ -24,7 +24,7 @@ treeMethods.contains = function (target) { // string
   return false;
 };
 
-treeMethods.removeChild = function (treeWithParent) {
+treeWithParentMethods.removeChild = function (treeWithParent) {
   for (var i = 0; i < this.children.length; i++) {
     if (this.children[i] === treeWithParent) {
       this.children.splice(i, 1);
@@ -34,7 +34,7 @@ treeMethods.removeChild = function (treeWithParent) {
   return false;
 };
 
-treeMethods.removeFromParent = function () {
+treeWithParentMethods.removeFromParent = function () {
   var remove_child = this.parent.removeChild(this);
   this.parent = null;
   return this;
