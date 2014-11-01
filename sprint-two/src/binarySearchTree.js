@@ -50,6 +50,19 @@ var makeBinarySearchTree = function (value) {
       tree.right.depthFirstLog(func);
     }
   };
+  tree.breadthFirstLog = function (func, first) {
+    if (first !== false) {
+      func(tree.value);
+    }
+    if (this.left !== null) func(this.left.value);
+    if (this.right !== null) func(this.right.value);
+    if (this.left !== null) {
+      this.left.breadthFirstLog(func, false);
+    }
+    if (this.right !== null) {
+      this.right.breadthFirstLog(func, false);
+    }
+  };
   return tree;
 };
 
