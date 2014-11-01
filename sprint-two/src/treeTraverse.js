@@ -20,7 +20,3 @@ treeWithTraverseMethods.traverse = function (func) {
     this.children[i].traverse(func);
   }
 };
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */

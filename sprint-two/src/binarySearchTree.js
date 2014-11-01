@@ -5,6 +5,10 @@ var makeBinarySearchTree = function (value, parent, rebalanceTree) {
   tree.right = null;
   tree.parent = parent || null;
   tree.rebalanceTree = (rebalanceTree ? true : false);
+  /**
+   * Time Complexity: Logarithmic
+   * - checkDepth involves a linear operation
+   */
   tree.insert = function (value, checkDepth) {
     var insert = function (side, value, checkDepth) {
       if (tree[side] === null) {
@@ -27,6 +31,9 @@ var makeBinarySearchTree = function (value, parent, rebalanceTree) {
     }
 
   };
+  /**
+   * Time Complexity: Logarithmic
+   */
   tree.contains = function (value) {
     if (value === tree.value) {
       return true;
@@ -45,6 +52,9 @@ var makeBinarySearchTree = function (value, parent, rebalanceTree) {
       }
     }
   };
+  /**
+   * Time Complexity: Linear
+   */
   tree.depthFirstLog = function (func) {
     func(tree.value);
     if (tree.left !== null) {
@@ -54,6 +64,9 @@ var makeBinarySearchTree = function (value, parent, rebalanceTree) {
       tree.right.depthFirstLog(func);
     }
   };
+  /**
+   * Time Complexity: Linear
+   */
   tree.breadthFirstLog = function (func, first) {
     if (first !== false) {
       func(tree.value);
@@ -67,30 +80,48 @@ var makeBinarySearchTree = function (value, parent, rebalanceTree) {
       tree.right.breadthFirstLog(func, false);
     }
   };
-  tree.getMaxDepth = function () {
-    return Math.max.apply(null, tree._getAllDepths());
+  /**
+   * Time Complexity: Linear (through _getAllDepths)
+   */
+  tree.getMaxDepth = function (allDepths) {
+    var allDepths = allDepths || tree._getAllDepths();
+    return Math.max.apply(null, allDepths);
   };
-  tree.getMinDepth = function () {
-    return Math.min.apply(null, tree._getAllDepths());
+  /**
+   * Time Complexity: Linear (through _getAllDepths)
+   */
+  tree.getMinDepth = function (allDepths) {
+    var allDepths = allDepths || tree._getAllDepths();
+    return Math.min.apply(null, allDepths);
   };
+  /**
+   * Time Complexity: Linear
+   */
   tree._getAllDepths = function (result, level) {
     if (result === undefined) result = [];
     if (level === undefined) level = 1;
-    return _.uniq(_.flatten([
+    return _.unique(_.flatten([
       (tree.left !== null ?  tree.left._getAllDepths(result, level + 1) : level),
       (tree.right !== null ? tree.right._getAllDepths(result, level + 1) : level)
     ]));
   };
+  /**
+   * Time Complexity: Linear (through _getAllDepths)
+   */
   tree.checkDepth = function () {
     if (tree.parent) return tree.parent.checkDepth();
     if (tree.rebalanceTree) {
-      var minDepth = tree.getMinDepth();
-      var maxDepth = tree.getMaxDepth();
+      var allDepths = tree._getAllDepths();
+      var minDepth = tree.getMinDepth(allDepths);
+      var maxDepth = tree.getMaxDepth(allDepths);
       if (maxDepth > (minDepth * 2)) {
         tree._rebalanceSearchTree();
       }
     }
   };
+  /**
+   * Time Complexity: Linear (through breadthFirstLog)
+   */
   tree._getAllValues = function () {
     var values  = [];
     tree.breadthFirstLog(function(value) {
@@ -98,6 +129,9 @@ var makeBinarySearchTree = function (value, parent, rebalanceTree) {
     });
     return values.sort(function(a, b){ return a - b; });
   };
+  /**
+   * Time Complexity : Linear (loops through values twice)
+   */
   tree._rebalanceSearchTree = function() {
     var results = tree._getAllValues();
     var insertValuesRecursively = function insertValuesRecursively(array, parent) {
@@ -126,8 +160,3 @@ var makeBinarySearchTree = function (value, parent, rebalanceTree) {
   };
   return tree;
 };
-
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */

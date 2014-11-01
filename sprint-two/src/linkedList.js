@@ -3,32 +3,39 @@ var makeLinkedList = function () {
   list.head = null;
   list.tail = null;
   list.values = {};
+
+  /**
+   * Time Complexity: Constant
+   */
   list.addToTail = function (value) {
     list.values[value] = makeNode(value);
-    // Assign tail to previuos tail
     if (list.tail !== null) {
       list.tail.next = list.values[value];
     }
-    // Re-assign tail
     list.tail = list.values[value];
-
     if (list.head === null) {
       list.head = list.values[value];
     }
   };
+
+  /**
+   * Time Complexity: Constant
+   */
   list.removeHead = function () {
     var temp = list.head;
     list.head = list.head.next;
     delete list.values[temp.value];
     return temp.value;
   };
+
+  /**
+   * Time Complexity: Linear
+   */
   list.contains = function (target) {
-    if (target in list.values) {
-      return true;
-    }
+    if (target in list.values) return true;
     return false;
   };
-  return list; // returned to the user
+  return list;
 };
 
 var makeNode = function (value) {
@@ -37,9 +44,3 @@ var makeNode = function (value) {
   node.next = null;
   return node;
 };
-
-
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */

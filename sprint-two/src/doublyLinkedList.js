@@ -3,36 +3,35 @@ var makeDoublyLinkedList = function () {
   list.head = null;
   list.tail = null;
   list.values = {};
+
   list.addToTail = function (value) {
     list.values[value] = makeNode(value);
-    // Assign tail to previuos tail
-    var old_tail = list.tail;
+    var oldTail = list.tail;
     if (list.tail !== null) {
-      old_tail = list.tail;
-      old_tail.next = list.values[value];
+      oldTail = list.tail;
+      oldTail.next = list.values[value];
     }
-    // Re-assign tail
     list.tail = list.values[value];
-    list.tail.previous = old_tail;
-
+    list.tail.previous = oldTail;
     if (list.head === null) {
       list.head = list.values[value];
     }
   };
+
   list.addToHead = function (value) {
     list.values[value] = makeNode(value);
-    var old_head = null;
+    var oldHead = null;
     if (list.head !== null) {
-      old_head = list.head;
-      old_head.previous = list.values[value];
+      oldHead = list.head;
+      oldHead.previous = list.values[value];
     }
     list.head = list.values[value];
-    list.head.next = old_head;
-
+    list.head.next = oldHead;
     if (list.tail === null) {
       list.tail = list.values[value];
     }
   };
+
   list.removeHead = function () {
     var temp = list.head;
     if (list.head.next !== null) {
@@ -42,6 +41,7 @@ var makeDoublyLinkedList = function () {
     delete list.values[temp.value];
     return temp.value;
   };
+
   list.removeTail = function () {
     var temp = list.tail;
     if (list.tail.previous !== null) {
@@ -67,9 +67,3 @@ var makeNode = function (value) {
   node.previous = null;
   return node;
 };
-
-
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */

@@ -52,11 +52,13 @@ Graph.prototype.removeEdge = function(fromNodeKey, toNodeKey){
 var Node = function (value) {
   this.value = value;
   this.edges = [];
+
   this.addEdge = function (node) {
     if (!this.hasEdge(node)) {
       this.edges.push(node.value);
     }
-  }
+  };
+
   this.hasEdge = function (node) {
     for (var i = 0; i < this.edges.length; i++) {
       if (this.edges[i] === node.value) {
@@ -64,10 +66,12 @@ var Node = function (value) {
       }
     }
     return false;
-  }
+  };
+
   this.hasEdges = function () {
     return this.edges.length > 0;
-  }
+  };
+
   this.removeEdge = function (node) {
     for (var i = 0; i < this.edges.length; i++) {
       if (this.edges[i] === node.value) {
@@ -76,7 +80,3 @@ var Node = function (value) {
     }
   }
 };
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */

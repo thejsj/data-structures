@@ -45,8 +45,3 @@ var extend = function (to, from) {
     to[key] = from[key];
   }
 };
-
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */
