@@ -62,7 +62,6 @@ HashTable.prototype.checkHashSize = function() {
       this._storage.each(function(val, i, arr) {
         if (Array.isArray(val)) {
           var val_array = val;
-          console.log(val_array.length);
           for (var i = 0; i < val_array.length; i++) {
             var k = val_array[i][0];
             var v = val_array[i][1];

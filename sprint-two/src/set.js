@@ -22,7 +22,7 @@ setPrototype.contains = function (item, returnValue) {
           'key': key,
           'value': this._storage[key]
         };
-      }
+      };
       return true;
     }
   }
