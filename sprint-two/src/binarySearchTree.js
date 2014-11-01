@@ -1,28 +1,29 @@
-var makeBinarySearchTree = function (value, isParent) {
+var makeBinarySearchTree = function (value, parent, rebalanceTree) {
   var tree = {};
   tree.value = value;
   tree.left = null;
   tree.right = null;
-  tree.isParent = (isParent !== undefined ? isParent : true);
-  tree.insert = function (value) {
-    var insert = function (side, value) {
+  tree.parent = parent || null;
+  tree.rebalanceTree = (rebalanceTree ? true : false);
+  tree.insert = function (value, checkDepth) {
+    var insert = function (side, value, checkDepth) {
       if (tree[side] === null) {
-        tree[side] = makeBinarySearchTree(value, false);
-        if (tree.isParent) {
+        tree[side] = makeBinarySearchTree(value, tree);
+        if (checkDepth !== false) {
           tree.checkDepth();
         }
         return tree[side];
       } else {
-        return tree[side].insert(value);
+        return tree[side].insert(value, checkDepth);
       }
     };
     if (value === tree.value) {
       return false;
     }
     if (value < tree.value) {
-      return insert('left', value);
+      return insert('left', value, checkDepth);
     } else {
-      return insert('right', value);
+      return insert('right', value, checkDepth);
     }
 
   };
@@ -81,17 +82,13 @@ var makeBinarySearchTree = function (value, isParent) {
     ]));
   };
   tree.checkDepth = function () {
-    console.log('checkDepth! : ', tree.isParent);
-    var minDepth = tree.getMinDepth();
-    var maxDepth = tree.getMaxDepth();
-    if (maxDepth > (minDepth * 2)) {
-      console.log('Rebalance!! : ', maxDepth, minDepth);
-      tree._rebalanceSearchTree()
-    } else {
-      console.log('Dont Rebalance : ', maxDepth, minDepth);
-      console.log(tree.value);
-      console.log(tree._getAllDepths());
-      console.log(tree._getAllValues());
+    if (tree.parent) return tree.parent.checkDepth();
+    if (tree.rebalanceTree) {
+      var minDepth = tree.getMinDepth();
+      var maxDepth = tree.getMaxDepth();
+      if (maxDepth > (minDepth * 2)) {
+        tree._rebalanceSearchTree();
+      }
     }
   };
   tree._getAllValues = function () {
@@ -99,44 +96,33 @@ var makeBinarySearchTree = function (value, isParent) {
     tree.breadthFirstLog(function(value) {
       values.push(value);
     });
-    return values.sort();
+    return values.sort(function(a, b){ return a - b; });
   };
   tree._rebalanceSearchTree = function() {
-    var results = [];
-    tree.breadthFirstLog(function(value) {
-      results.push(value);
-    });
-    results = results.sort();
-    // Create new tree that will replace this tree
-    // Recursively, insert values through finding middle, left, and aright of results
-    var insertValuesRecursively = function insertValuesRecursively(array, tree) {
-      // Find middle of array
-      var middle_index = Math.floor(array.length / 2)
+    var results = tree._getAllValues();
+    var insertValuesRecursively = function insertValuesRecursively(array, parent) {
+      var middle_index = Math.floor(array.length / 2);
       var middle = array[middle_index];
-      // Find left of array
       var left = array.slice(0, middle_index);
-      // Find right of array
       var right = array.slice(middle_index + 1);
-      // If tree is not defined, Create a new one
-      if (tree === null) {
-        var newTree = makeBinarySearchTree(middleValue);
+      if (tree.value === null) {
+        tree.value = middle;
+        tree.parent = null;
       } else {
-        tree.insert(middleValue);
+        var newNode = tree.insert(middle, false);
       }
-      // Check if left is an array and is not null
       if (left.length > 0) {
-        insertValuesRecursively(left, newTree || tree);
+        insertValuesRecursively(left, (newNode ? newNode : null));
       }
-      // Check if righ is an array and is not null
       if (right.length > 0) {
-        insertValuesRecursively(right, newTree || tree);
+        insertValuesRecursively(right, (newNode ? newNode : null));
       }
-      if (newTree !== undefined) return newTree;
     }
-    var newTree =insertValuesRecursively(results, null);
-    console.log('newTree');
-    console.log(newTree);
-    _.extend(tree, newTree);
+    tree.value = null;
+    tree.left = null;
+    tree.right = null;
+    tree.parent = null;
+    insertValuesRecursively(results, tree, null);
   };
   return tree;
 };

@@ -34,14 +34,22 @@ describe('binarySearchTree', function() {
 
   it('should get the correct min depth for a tree', function () {
     console.clear();
-    console.log('*******');
+    /**
+     *      8
+     *   6     10
+     * 5  7   9   11
+     */
+    binarySearchTree = makeBinarySearchTree(5, null, true);
     binarySearchTree.insert(6);
     binarySearchTree.insert(7);
     binarySearchTree.insert(8); // new top value
     binarySearchTree.insert(9);
     binarySearchTree.insert(10);
     binarySearchTree.insert(11);
-    console.log(' %%%%%%% ')
+    console.log('!!!');
+    console.log(binarySearchTree.getMinDepth());
+    console.log(binarySearchTree.getMaxDepth());
+    window.binarySearchTree = binarySearchTree;
     expect(binarySearchTree.getMinDepth()).to.equal(3);
     expect(binarySearchTree.getMaxDepth()).to.equal(3);
   });
