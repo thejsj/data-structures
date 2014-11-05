@@ -7,28 +7,37 @@ var makeSet = function () {
 
 var setPrototype = {};
 
+/**
+ * Time Complexity: Linear (because of .contains, otherwise it's constant)
+ */
 setPrototype.add = function (item) {
   if (!this.contains(item)) {
-    this._storage[this._count++] = item;
+    this._storage[this._count++] = item; // Constant Time
   }
 };
 
+/**
+ * Time Complexity: Linear
+ */
 setPrototype.contains = function (item, returnValue) {
   returnValue = returnValue || false;
-  for (var key in this._storage) {
+  for (var key in this._storage) { //n
     if (this._storage[key] === item) {
       if (returnValue === true) {
         return {
           'key': key,
           'value': this._storage[key]
         };
-      }
+      };
       return true;
     }
   }
   return false;
 };
 
+/**
+ * Time Complexity: Linear (because of .contains, otherwise it's constant)
+ */
 setPrototype.remove = function (item) {
   if (this._count > 0) {
     if (this.contains(item)) {
@@ -39,7 +48,3 @@ setPrototype.remove = function (item) {
     }
   }
 };
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */
