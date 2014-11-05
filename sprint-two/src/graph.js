@@ -1,28 +1,29 @@
-var Graph = function(){
+var Graph = function () {
   this.nodes = {};
 };
 
-Graph.prototype.addNode = function(newNodeKey, toNodeKey) {
+Graph.prototype.addNode = function (newNodeKey, toNodeKey) {
   this.nodes[newNodeKey] = (new Node(newNodeKey));
   if (toNodeKey !== undefined && this.nodes[toNodeKey]) {
     this.addEdge(newNodeKey, toNodeKey);
   }
   var keys = Object.keys(this.nodes);
-  if (keys.length === 2) {
-    this.addEdge(keys[0], keys[1]);
+  if (toNodeKey === undefined) {
+    // Connect to the first node
+    this.addEdge(keys[0], newNodeKey);
   }
 };
 
-Graph.prototype.contains = function(nodeKey){
+Graph.prototype.contains = function (nodeKey) {
   if (this.nodes[nodeKey]) return true;
   return false;
 };
 
-Graph.prototype.removeNode = function(nodeKey){
+Graph.prototype.removeNode = function (nodeKey) {
   delete this.nodes[nodeKey];
 };
 
-Graph.prototype.getEdge = function(fromNodeKey, toNodeKey){
+Graph.prototype.getEdge = function (fromNodeKey, toNodeKey) {
   if (!(fromNodeKey in this.nodes) && !(toNodeKey in this.nodes)) {
     return false;
   }
@@ -31,14 +32,14 @@ Graph.prototype.getEdge = function(fromNodeKey, toNodeKey){
   return (fromNode.hasEdge(toNode) && toNode.hasEdge(fromNode));
 };
 
-Graph.prototype.addEdge = function(fromNodeKey, toNodeKey){
+Graph.prototype.addEdge = function (fromNodeKey, toNodeKey) {
   var fromNode = this.nodes[fromNodeKey];
   var toNode = this.nodes[toNodeKey];
   fromNode.addEdge(toNode);
   toNode.addEdge(fromNode);
 };
 
-Graph.prototype.removeEdge = function(fromNodeKey, toNodeKey){
+Graph.prototype.removeEdge = function (fromNodeKey, toNodeKey) {
   var fromNode = this.nodes[fromNodeKey];
   var toNode = this.nodes[toNodeKey];
   fromNode.removeEdge(toNode);

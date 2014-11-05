@@ -8,10 +8,7 @@ HashTable.prototype.insert = function (k, v) {
     // get the array at this point
     var val_array = this._storage.get(i) || [];
     // push a value to that array
-    val_array.push({
-        'k': k,
-        'v': v
-    });
+    val_array.push([k, v]);
     // store that array
     this._storage.set(i, val_array);
 };
@@ -22,8 +19,8 @@ HashTable.prototype.retrieve = function (k) {
     var val_array = this._storage.get(i);
     //loop through that array
     for (var i = 0; i < val_array.length; i++) {
-        if (val_array[i].k === k) {
-            return val_array[i].v;
+        if (val_array[i][0] === k) {
+            return val_array[i][1];
         }
     }
     return null;
@@ -35,7 +32,7 @@ HashTable.prototype.remove = function (k) {
     var val_array = this._storage.get(i);
     // loop through the array
     for (var i = 0; i < val_array.length; i++) {
-        if (val_array[i].k === k) {
+        if (val_array[i][0] === k) {
             val_array.splice(i, 1);
         }
     }
