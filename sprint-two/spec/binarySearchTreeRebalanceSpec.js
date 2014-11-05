@@ -33,7 +33,6 @@ describe('binarySearchTree', function() {
   });
 
   it('should get the correct min depth for a tree', function () {
-    console.clear();
     /**
      *      8
      *   6     10

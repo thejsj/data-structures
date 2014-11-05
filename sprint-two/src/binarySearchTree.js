@@ -55,29 +55,32 @@ var makeBinarySearchTree = function (value, parent, rebalanceTree) {
   /**
    * Time Complexity: Linear
    */
-  tree.depthFirstLog = function (func) {
-    func(tree.value);
+  tree.depthFirstLog = function (func, level) {
+    level = level || 0;
+    func(tree.value, level);
     if (tree.left !== null) {
-      tree.left.depthFirstLog(func);
+      tree.left.depthFirstLog(func, level + 1);
     }
     if (tree.right !== null) {
-      tree.right.depthFirstLog(func);
+      tree.right.depthFirstLog(func, level + 1);
     }
   };
   /**
    * Time Complexity: Linear
    */
   tree.breadthFirstLog = function (func, first) {
-    if (first !== false) {
-      func(tree.value);
-    }
-    if (tree.left !== null) func(tree.left.value);
-    if (tree.right !== null) func(tree.right.value);
-    if (tree.left !== null) {
-      tree.left.breadthFirstLog(func, false);
-    }
-    if (tree.right !== null) {
-      tree.right.breadthFirstLog(func, false);
+    var values = [];
+    var maxLevel = 0;
+    tree.depthFirstLog(function (value, level) {
+      values.push({'level': level, 'value': value });
+      maxLevel = Math.max(maxLevel, level);
+    });
+    for (var i = 0; i <= maxLevel; i += 1) {
+      for (var ii = 0; ii < values.length; ii += 1) {
+        if (values[ii].level === i) {
+          func(values[ii].value);
+        }
+      }
     }
   };
   /**
@@ -124,7 +127,7 @@ var makeBinarySearchTree = function (value, parent, rebalanceTree) {
    */
   tree._getAllValues = function () {
     var values  = [];
-    tree.breadthFirstLog(function(value) {
+    tree.depthFirstLog(function(value) {
       values.push(value);
     });
     return values.sort(function(a, b){ return a - b; });
